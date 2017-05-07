@@ -17,7 +17,9 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
   ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+    console.log('received: ' + message);
+    //console.log('received: %s', message);
+    Broadcast(ws,message);
   });
 });
 
