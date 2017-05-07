@@ -26,7 +26,8 @@ wss.on('connection', (ws) => {
 function Broadcast(ws,msg)
 {
   wss.clients.forEach((client) => {
-    if(ws!=client) client.send(msg);
+    if(ws!=client && client.readyState === WebSocket.OPEN)
+      client.send(msg);
   });
 }
 
