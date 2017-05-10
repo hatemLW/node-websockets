@@ -37,7 +37,21 @@ const wss = new SocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
+  
+  ws.on('message', msg => {
+	     console.log('WebSocket new client');
+    SendAll(ws,msg)
+		//ws.send(msg);
+    });
 });
+
+function SendAll(ws,msg)
+{
+  wss.clients.forEach((client) => {
+    if(ws!=client)
+      client.send(msg);
+  });
+}
 
 setInterval(() => {
   wss.clients.forEach((client) => {
