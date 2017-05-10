@@ -5,7 +5,8 @@ var io = require('socket.io')(http);
 app.get('/', function(req, res){
 
   //send the index.html file for all requests
-  res.sendFile(__dirname + '/index.html');
+ //res.sendFile(__dirname + '/index.html');
+  res.send('<h1>Hello world</h1>');
 
 });
 
