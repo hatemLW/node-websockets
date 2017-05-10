@@ -16,8 +16,8 @@
     "bufferutil": "1.2.1",
     "express": "4.13.4",
     "utf-8-validate": "1.2.1",
-    "body-parser": "^1.15.0",
-    "socket.io": "~1.4.5",
-     "jade": ">= 0.26.1"
+    "grunt-concurrent": "^2.0.0",
+    "grunt-nodemon": "^0.4.0",
+    "nodejs-websocket": "^1.2.1"
   }
 }
