@@ -1,4 +1,4 @@
-var app = require('express')();
+/*var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -14,9 +14,9 @@ io.on('connection', function (socket) {
   socket.on('my other event', function (data) {
     console.log(data);
   });
-});
+});*/
 
-/*'use strict';
+'use strict';
 
 const express = require('express');
 const SocketServer = require('ws').Server;
@@ -47,7 +47,7 @@ function Broadcast(ws,msg)
     if(ws!=client && client.readyState === WebSocket.OPEN)
       client.send(msg);
   });
-}*/
+}
 
 /*setInterval(() => {
   wss.clients.forEach((client) => {
