@@ -18,28 +18,21 @@ io.on('connection', function (socket) {
 
 //'use strict';
 
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var app = require('express').createServer();
+var io = require('socket.io')(app);
 
-io.on('connection', function (socket){
-   console.log('connection');
-
-  socket.on('CH01', function (from, msg) {
-    console.log('MSG', from, ' saying ', msg);
-  });
-
-});
+app.listen(80);
 
 app.get('/', function (req, res) {
-  res.send('<h1>Hello world</h1>');
-  //res.sendfile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
-http.listen(3000, function () {
-  console.log('listening on *:3000');
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
-
 /*
 const express = require('express');
 const SocketServer = require('ws').Server;
