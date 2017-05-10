@@ -18,55 +18,44 @@ io.on('connection', function (socket) {
 
 //'use strict';
  
-import express from 'express';
-import bodyParser from 'body-parser';
+var express = require('express')
+  , app = express()
+  , http = require('http')
+  , server = http.createServer(app)
+  , routes = require('./routes')
+  , socket = require('./routes/socket.js')
+  , io = require('socket.io').listen(server);
 
-const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io').listen(server);
-const usernames = {};
 
-app.set('view engine', 'ejs');
-app.set('view options', { layout: false });
-app.use('/public', express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.render('index'));
+// Heroku config only
+if(process.env.PORT) {
+  io.configure(function () { 
+    io.set("transports", ["xhr-polling"]); 
+    io.set("polling duration", 10); 
+  });  
+}
 
-io.sockets.on('connection', (socket) => {
-  socket.on('sendchat', (data) => {
-    io.sockets.emit('updatechat', socket.username, data);
-  });
 
-  socket.on('adduser', (username) => {
-    socket.username = username;
+// Configuration
+var config = require('./config')(app, express);
 
-    usernames[username] = username;
 
-    socket.emit(
-      'servernotification', {
-        connected: true,
-        toSelf: true,
-        username: username
-      });
+// Routes
+app.get('/', routes.index);
+app.get('/partials/:name', routes.partials);
 
-    socket.broadcast.emit('servernotification', { connected: true, username: username });
+// redirect all others to the index (HTML5 history)
+app.get('*', routes.index);
 
-    io.sockets.emit('updateusers', usernames);
-  });
+// Socket.io Communication
 
-  socket.on('disconnect', () => {
-    delete usernames[socket.username];
+io.sockets.on('connection', socket);
 
-    io.sockets.emit('updateusers', usernames);
+// Start server
+var port = process.env.PORT || 5000;
 
-    socket.broadcast.emit('servernotification', { username: socket.username });
-  });
-});
-
-server.listen(process.env.PORT || 3000);
-
+server.listen(port);
 /*
 const express = require('express');
 const SocketServer = require('ws').Server;
