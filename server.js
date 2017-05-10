@@ -19,11 +19,11 @@ io.on('connection', function (socket) {
 //'use strict';
  
 
+'use strict';
 
 const express = require('express');
 const SocketServer = require('ws').Server;
 const path = require('path');
-var WebSocket = require('ws');
 
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
@@ -37,21 +37,13 @@ const wss = new SocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
-  ws.on('message', function incoming(message) {
-    console.log('received: ' + message);
-    //console.log('received: %s', message);
-    Broadcast(ws,message);
-  });
 });
 
-function Broadcast(ws,msg)
-{
+setInterval(() => {
   wss.clients.forEach((client) => {
-    if(ws!=client && client.readyState === WebSocket.OPEN)
-      client.send(msg);
+    client.send(new Date().toTimeString());
   });
-}
-
+}, 1000);
 
 /*setInterval(() => {
   wss.clients.forEach((client) => {
