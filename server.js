@@ -29,12 +29,12 @@ var express = require('express')
 
 
 // Heroku config only
-if(process.env.PORT) {
+/*if(process.env.PORT) {
   io.configure(function () { 
     io.set("transports", ["xhr-polling"]); 
     io.set("polling duration", 10); 
   });  
-}
+}*/
 
 
 // Configuration
