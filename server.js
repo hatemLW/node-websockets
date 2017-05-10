@@ -9,10 +9,23 @@ app.get('/', function(req, res){
 
 });
 
-http.listen(3001, function(){
+http.listen(3001, function(ws){
 
   console.log('listening on *:3001');
 
+});
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+  
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+  
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+  });
+  
 });
 
 //for testing, we're just going to send data to the client every second
@@ -23,8 +36,8 @@ setInterval( function() {
     number that we generate on the server
   */
   var msg = Math.random();
-  io.emit('message', msg);
-  console.log (msg);
+  //io.emit('message', msg);
+  //console.log (msg);
 
 }, 1000);
 
