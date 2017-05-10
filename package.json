@@ -16,8 +16,6 @@
     "bufferutil": "1.2.1",
     "express": "4.13.4",
     "utf-8-validate": "1.2.1",
-    "grunt-concurrent": "^2.0.0",
-    "grunt-nodemon": "^0.4.0",
-    "nodejs-websocket": "^1.2.1"
+    "ws": "1.1.0"
   }
 }
