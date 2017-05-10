@@ -1,46 +1,16 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(80);
 
-app.get('/', function(req, res){
+io.on('connection', function (socket) {
+  io.emit('this', { will: 'be received by everyone'});
 
-  //send the index.html file for all requests
- //res.sendFile(__dirname + '/index.html');
-  res.send('<h1>Hello world</h1>');
-
-});
-
-http.listen(3001, function(ws){
-
-  console.log('listening on *:3001');
-
-});
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-  
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
+  socket.on('private message', function (from, msg) {
+    console.log('I received a private message by ', from, ' saying ', msg);
   });
-  
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
+
+  socket.on('disconnect', function () {
+    io.emit('user disconnected');
   });
-  
 });
-
-//for testing, we're just going to send data to the client every second
-setInterval( function() {
-
-  /*
-    our message we want to send to the client: in this case it's just a random
-    number that we generate on the server
-  */
-  var msg = Math.random();
-  //io.emit('message', msg);
-  //console.log (msg);
-
-}, 1000);
 
 /*'use strict';
 
