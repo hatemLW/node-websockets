@@ -1,15 +1,19 @@
-var io = require('socket.io')(80);
-console.log('000');
-io.on('connection', function (socket) {
-  //io.emit('this', { will: 'be received by everyone'});
-console.log('111');
-  //socket.on('private message', function (from, msg) {
-  //  console.log('I received a private message by ', from, ' saying ', msg);
-  //});
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-  //socket.on('disconnect', function () {
-  //  io.emit('user disconnected');
-  //});
+server.listen(80);
+
+app.get('/', function (req, res) {
+  res.send('<h1>Hello world</h1>');
+  //res.sendfile(__dirname + '/index.html');
+});
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
 
 /*'use strict';
