@@ -1,15 +1,15 @@
 var io = require('socket.io')(80);
-
+console.log('000');
 io.on('connection', function (socket) {
-  io.emit('this', { will: 'be received by everyone'});
+  //io.emit('this', { will: 'be received by everyone'});
+console.log('111');
+  //socket.on('private message', function (from, msg) {
+  //  console.log('I received a private message by ', from, ' saying ', msg);
+  //});
 
-  socket.on('private message', function (from, msg) {
-    console.log('I received a private message by ', from, ' saying ', msg);
-  });
-
-  socket.on('disconnect', function () {
-    io.emit('user disconnected');
-  });
+  //socket.on('disconnect', function () {
+  //  io.emit('user disconnected');
+  //});
 });
 
 /*'use strict';
