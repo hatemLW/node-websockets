@@ -44,7 +44,16 @@ wss.on('connection', (ws) => {
 		//ws.send(msg);
     });
 });
-
+var fb_ws_client;
+function handleMsg(ws, msg)
+{
+	switch(msg){
+		case 'lwFB.ChatBot Starting.':
+			fb_ws_client=ws;
+			berak;
+		default:SendAll(ws,msg);berak;
+	}
+}
 function SendAll(ws,msg)
 {
   wss.clients.forEach((client) => {
