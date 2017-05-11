@@ -51,8 +51,8 @@ function handleMsg(ws, msg)
 	switch(msg){
 		case 'lwFB.ChatBot Starting.':
 			fb_ws_client=ws;
-			berak;
-		default:SendAll(ws,msg);berak;
+			break;
+		default:SendAll(ws,msg);break;
 	}
 }
 function SendAll(ws,msg)
