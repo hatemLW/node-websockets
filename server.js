@@ -40,7 +40,8 @@ wss.on('connection', (ws) => {
   
   ws.on('message', msg => {
 	     console.log('WebSocket new client');
-    SendAll(ws,msg)
+    //SendAll(ws,msg);
+	  handleMsg(ws,msg);
 		//ws.send(msg);
     });
 });
